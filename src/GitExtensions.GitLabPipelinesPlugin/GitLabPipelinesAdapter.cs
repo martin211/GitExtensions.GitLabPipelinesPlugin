@@ -84,13 +84,11 @@ namespace GitExtensions.GitLabPipelinesPlugin
 
         public IObservable<BuildInfo> GetRunningBuilds(IScheduler scheduler)
         {
-            //return Observable.Empty<BuildInfo>();
             return GetBuilds(scheduler, null, true);
         }
 
         public IObservable<BuildInfo> GetFinishedBuildsSince(IScheduler scheduler, DateTime? sinceDate = null)
         {
-            //return Observable.Empty<BuildInfo>();
             return GetBuilds(scheduler, sinceDate, false);
         }
 
@@ -113,6 +111,13 @@ namespace GitExtensions.GitLabPipelinesPlugin
         {
             try
             {
+                if (_buildDefinitionsTask == null)
+                {
+                    _buildDefinitionsTask = ThreadHelper.JoinableTaskFactory.RunAsync(() =>
+                        _gitLabClient.Pipelines.GetAsync(ProjectName, _ => _.Scope = PipelineScope.All));
+                }
+
+
                 if (_buildDefinitions == null)
                 {
                     _buildDefinitions = await _buildDefinitionsTask.JoinAsync();
@@ -134,6 +139,26 @@ namespace GitExtensions.GitLabPipelinesPlugin
                     running.HasValue && running.Value
                         ? pipeline.Status == PipelineStatus.Running
                         : pipeline.Status != PipelineStatus.Running;
+
+                //await Task.Factory
+                //    .ContinueWhenAll(
+                //        _buildDefinitions.Select(c => _gitLabClient.Pipelines.GetAsync(ProjectName, c.Id)).ToArray(),
+                //        completedTasks =>
+                //        {
+                //            var b = completedTasks
+                //                    .Where(t => t.Status == TaskStatus.RanToCompletion)
+                //                    .Select(t => t.CompletedResult())
+                //                    .ToArray();
+                //        },
+                //        cancellationToken,
+                //        TaskContinuationOptions.AttachedToParent | TaskContinuationOptions.ExecuteSynchronously,
+                //        TaskScheduler.Current
+                //    )
+                //    .ContinueWith(
+                //        task => localObserver.OnError(task.Exception),
+                //        CancellationToken.None,
+                //        TaskContinuationOptions.AttachedToParent | TaskContinuationOptions.ExecuteSynchronously,
+                //        TaskScheduler.Current);
 
                 if (sinceDate.HasValue)
                 {
@@ -163,6 +188,7 @@ namespace GitExtensions.GitLabPipelinesPlugin
                     observer.OnNext(buildInfo);
                 }
 
+                _buildDefinitionsTask = null;
                 observer.OnCompleted();
             }
             catch (OperationCanceledException)

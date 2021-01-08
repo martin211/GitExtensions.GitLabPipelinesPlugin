@@ -43,7 +43,7 @@ deploy:
   stage: deploy
   script:
     - cd $build_path
-    - powershell -File $CI_PROJECT_DIR\build.ps1 Deploy
+    - powershell -File $CI_PROJECT_DIR\build.ps1 Deploy --NugetSourceName GitLab
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
