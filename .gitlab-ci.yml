@@ -1,0 +1,50 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  build_path: "$CI_PROJECT_DIR/src/"
+  output_path: "$CI_PROJECT_DIR/output/"
+  output_packages_path: "$output_path/packages/"
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - src/packages/
+    - gitextensions.shared/
+    - output/packages/
+
+before_script:
+  - cd $build_path
+  - dotnet restore
+
+build:
+  stage: build
+  script:
+    - cd $build_path
+    - powershell -File $CI_PROJECT_DIR\build.ps1 Compile --Configuation Release
+
+pack:
+  stage: deploy
+  script:
+    - cd $build_path
+    - powershell -File $CI_PROJECT_DIR\build.ps1 Pack --Configuation Release
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - output/packages/
+  artifacts:
+    paths:
+      - output/packages/
+  only:
+    - master
+
+deploy:
+  stage: deploy
+  script:
+    - cd $build_path
+    - powershell -File $CI_PROJECT_DIR\build.ps1 Deploy
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - output/packages/

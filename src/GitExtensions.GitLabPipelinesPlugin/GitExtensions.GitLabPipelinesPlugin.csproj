@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GitExtensions.Extensibility" Version="0.1.1.40" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.5.132" />
+    <PackageReference Include="System.Reactive.Linq" Version="4.2.0" />
+  </ItemGroup>
+
+  <!-- Reference to GitExtensions dlls. -->
+  <ItemGroup>
+    <Reference Include="GitCommands">
+      <HintPath>$(GitExtensionsPath)\GitCommands.dll</HintPath>
+    </Reference>
+    <Reference Include="GitExtUtils">
+      <HintPath>$(GitExtensionsPath)\GitExtUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="GitUI">
+      <HintPath>$(GitExtensionsPath)\GitUI.dll</HintPath>
+    </Reference>
+    <Reference Include="GitUIPluginInterfaces">
+      <HintPath>$(GitExtensionsPath)\GitUIPluginInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ResourceManager">
+      <HintPath>$(GitExtensionsPath)\ResourceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GitLabApiClient\GitLabApiClient.csproj" />
+  </ItemGroup>
+
+</Project>
