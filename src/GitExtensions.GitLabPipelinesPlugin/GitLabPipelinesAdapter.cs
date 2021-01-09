@@ -140,26 +140,6 @@ namespace GitExtensions.GitLabPipelinesPlugin
                         ? pipeline.Status == PipelineStatus.Running
                         : pipeline.Status != PipelineStatus.Running;
 
-                //await Task.Factory
-                //    .ContinueWhenAll(
-                //        _buildDefinitions.Select(c => _gitLabClient.Pipelines.GetAsync(ProjectName, c.Id)).ToArray(),
-                //        completedTasks =>
-                //        {
-                //            var b = completedTasks
-                //                    .Where(t => t.Status == TaskStatus.RanToCompletion)
-                //                    .Select(t => t.CompletedResult())
-                //                    .ToArray();
-                //        },
-                //        cancellationToken,
-                //        TaskContinuationOptions.AttachedToParent | TaskContinuationOptions.ExecuteSynchronously,
-                //        TaskScheduler.Current
-                //    )
-                //    .ContinueWith(
-                //        task => localObserver.OnError(task.Exception),
-                //        CancellationToken.None,
-                //        TaskContinuationOptions.AttachedToParent | TaskContinuationOptions.ExecuteSynchronously,
-                //        TaskScheduler.Current);
-
                 if (sinceDate.HasValue)
                 {
                     predicate += pipeline => pipeline.CreatedAt >= sinceDate;

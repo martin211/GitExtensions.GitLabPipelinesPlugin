@@ -51,12 +51,9 @@ namespace GitExtensions.GitLabPipelinesPlugin.Settings
 
         public void SaveSettings(ISettingsSource buildServerConfig)
         {
-            if (BuildServerSettingsHelper.IsRegexValid(buildIdFilter.Text))
-            {
-                buildServerConfig.SetString("GitLabBuildServerUrl", gitLabServerUrl.Text);
-                buildServerConfig.SetString("GitLabProjectName", projectName.Text);
-                buildServerConfig.SetString("GitLabToken", userToken.Text);
-            }
+            buildServerConfig.SetString("GitLabBuildServerUrl", gitLabServerUrl.Text);
+            buildServerConfig.SetString("GitLabProjectName", projectName.Text);
+            buildServerConfig.SetString("GitLabToken", userToken.Text);
         }
 
         private void buttonProjectChooser_Click(object sender, EventArgs e)

@@ -30,21 +30,16 @@ namespace GitExtensions.GitLabPipelinesPlugin.Settings
         {
             System.Windows.Forms.Label label13;
             System.Windows.Forms.Label label1;
-            System.Windows.Forms.Label labelProjectNameComment;
-            System.Windows.Forms.Label labelBuildFilter;
             System.Windows.Forms.Label label2;
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.gitLabServerUrl = new System.Windows.Forms.TextBox();
-            this.buildIdFilter = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.projectName = new System.Windows.Forms.TextBox();
             this.buttonProjectChooser = new System.Windows.Forms.Button();
             this.userToken = new System.Windows.Forms.TextBox();
             label13 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
-            labelProjectNameComment = new System.Windows.Forms.Label();
-            labelBuildFilter = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -70,26 +65,15 @@ namespace GitExtensions.GitLabPipelinesPlugin.Settings
             label1.TabIndex = 2;
             label1.Text = "Project name";
             // 
-            // labelProjectNameComment
+            // label2
             // 
-            labelProjectNameComment.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            labelProjectNameComment.AutoSize = true;
-            labelProjectNameComment.Location = new System.Drawing.Point(104, 77);
-            labelProjectNameComment.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
-            labelProjectNameComment.Name = "labelProjectNameComment";
-            labelProjectNameComment.Size = new System.Drawing.Size(156, 13);
-            labelProjectNameComment.TabIndex = 6;
-            labelProjectNameComment.Text = "Several names splitted by | char";
-            // 
-            // labelBuildFilter
-            // 
-            labelBuildFilter.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            labelBuildFilter.AutoSize = true;
-            labelBuildFilter.Location = new System.Drawing.Point(3, 95);
-            labelBuildFilter.Name = "labelBuildFilter";
-            labelBuildFilter.Size = new System.Drawing.Size(67, 13);
-            labelBuildFilter.TabIndex = 4;
-            labelBuildFilter.Text = "Build Id Filter";
+            label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(3, 6);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(59, 13);
+            label2.TabIndex = 18;
+            label2.Text = "User token";
             // 
             // tableLayoutPanel1
             // 
@@ -103,9 +87,6 @@ namespace GitExtensions.GitLabPipelinesPlugin.Settings
             this.tableLayoutPanel1.Controls.Add(this.gitLabServerUrl, 1, 1);
             this.tableLayoutPanel1.Controls.Add(label13, 0, 1);
             this.tableLayoutPanel1.Controls.Add(label1, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(labelBuildFilter, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(labelProjectNameComment, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.buildIdFilter, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.userToken, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -119,14 +100,14 @@ namespace GitExtensions.GitLabPipelinesPlugin.Settings
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(550, 114);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(550, 74);
             this.tableLayoutPanel1.TabIndex = 14;
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(101, 114);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(101, 74);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(449, 1);
@@ -142,16 +123,6 @@ namespace GitExtensions.GitLabPipelinesPlugin.Settings
             this.gitLabServerUrl.Size = new System.Drawing.Size(443, 20);
             this.gitLabServerUrl.TabIndex = 2;
             this.gitLabServerUrl.TextChanged += new System.EventHandler(this.TeamCityServerUrl_TextChanged);
-            // 
-            // TeamCityBuildIdFilter
-            // 
-            this.buildIdFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buildIdFilter.Location = new System.Drawing.Point(104, 92);
-            this.buildIdFilter.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buildIdFilter.Name = "buildIdFilter";
-            this.buildIdFilter.Size = new System.Drawing.Size(443, 20);
-            this.buildIdFilter.TabIndex = 5;
             // 
             // tableLayoutPanel2
             // 
@@ -171,7 +142,7 @@ namespace GitExtensions.GitLabPipelinesPlugin.Settings
             this.tableLayoutPanel2.Size = new System.Drawing.Size(449, 24);
             this.tableLayoutPanel2.TabIndex = 15;
             // 
-            // TeamCityProjectName
+            // projectName
             // 
             this.projectName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -202,17 +173,7 @@ namespace GitExtensions.GitLabPipelinesPlugin.Settings
             this.userToken.Size = new System.Drawing.Size(443, 20);
             this.userToken.TabIndex = 17;
             // 
-            // label2
-            // 
-            label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(3, 6);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(59, 13);
-            label2.TabIndex = 18;
-            label2.Text = "User token";
-            // 
-            // TeamCitySettingsUserControl
+            // SettingsUserControl
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.AutoSize = true;
@@ -220,7 +181,7 @@ namespace GitExtensions.GitLabPipelinesPlugin.Settings
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "SettingsUserControl";
-            this.Size = new System.Drawing.Size(550, 114);
+            this.Size = new System.Drawing.Size(550, 74);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -234,7 +195,6 @@ namespace GitExtensions.GitLabPipelinesPlugin.Settings
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.TextBox gitLabServerUrl;
-        private System.Windows.Forms.TextBox buildIdFilter;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TextBox projectName;
         private System.Windows.Forms.Button buttonProjectChooser;
