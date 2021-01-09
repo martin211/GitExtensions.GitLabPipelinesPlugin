@@ -1,0 +1,9 @@
+next-version: 0.1.0
+assembly-versioning-scheme: MajorMinorPatch
+assembly-file-versioning-scheme: MajorMinorPatchTag
+mode: Mainline
+branches:
+  master:
+    regex: master
+    tag: ''
+    increment: Patch

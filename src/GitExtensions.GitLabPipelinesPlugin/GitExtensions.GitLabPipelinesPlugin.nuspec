@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>martin211 (Evgeniy Bogdan)</authors>
+    <description>GitLab Pipeline Plugin for GitExtensions</description>
+    <projectUrl>https://github.com/martin211/GitExtensions.GitLabPipelinesPlugin</projectUrl>
+    <tags>GitExtensions,GitLab</tags>
+    <dependencies>
+      <dependency id="GitExtensions.Extensibility" version="(0.1.0, 1.0.0)" />
+      <dependency id="Newtonsoft.Json" version="10.0.3" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="$targetDir$$id$.dll" target="/lib" />
+    <file src="$targetDir$GitLabApiClient.dll" target="/lib" />
+    <file src="$targetDir$Newtonsoft.Json.dll" target="/lib" />
+  </files>
+</package>
