@@ -61,7 +61,18 @@ namespace GitExtensions.GitLabPipelinesPlugin
             GC.SuppressFinalize(this);
         }
 
-        public void Initialize(IBuildServerWatcher buildServerWatcher, ISettingsSource config, Func<ObjectId, bool> isCommitInRevisionGrid = null)
+        public string UniqueKey => _gitLabClient.HostUrl;
+
+        public IObservable<BuildInfo> GetRunningBuilds(IScheduler scheduler)
+        {
+            return GetBuilds(scheduler, null, true);
+        }
+
+        public void Initialize(
+            IBuildServerWatcher buildServerWatcher,
+            ISettingsSource config,
+            Action openSettings,
+            Func<ObjectId, bool> isCommitInRevisionGrid = null)
         {
             if (_buildServerWatcher != null)
             {
@@ -78,13 +89,6 @@ namespace GitExtensions.GitLabPipelinesPlugin
 
             _buildDefinitionsTask = ThreadHelper.JoinableTaskFactory.RunAsync(() =>
                 _gitLabClient.Pipelines.GetAsync(ProjectName, _ => _.Scope = PipelineScope.All));
-        }
-
-        public string UniqueKey => _gitLabClient.HostUrl;
-
-        public IObservable<BuildInfo> GetRunningBuilds(IScheduler scheduler)
-        {
-            return GetBuilds(scheduler, null, true);
         }
 
         public IObservable<BuildInfo> GetFinishedBuildsSince(IScheduler scheduler, DateTime? sinceDate = null)
