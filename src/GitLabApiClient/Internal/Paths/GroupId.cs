@@ -8,15 +8,13 @@ namespace GitLabApiClient.Internal.Paths
     {
         private readonly string _path;
 
-        private GroupId(string groupPath)
-        {
-            _path = groupPath;
-        }
+        private GroupId(string groupPath) => _path = groupPath;
 
         /// <summary>
-        ///     GroupId will encode the group path for you.
+        /// GroupId will encode the group path for you
         /// </summary>
-        /// <param name="groupPath">The project path ie. 'group/project'.</param>
+        /// <param name="groupPath">The project path ie. 'group/project'</param>
+        /// <returns></returns>
         public static implicit operator GroupId(string groupPath)
         {
             return new GroupId(groupPath.UrlEncode());
@@ -31,15 +29,11 @@ namespace GitLabApiClient.Internal.Paths
         {
             string groupPath = group.FullPath?.Trim();
             if (!string.IsNullOrEmpty(groupPath))
-            {
                 return new GroupId(groupPath.UrlEncode());
-            }
 
             int id = group.Id;
             if (id > 0)
-            {
                 return new GroupId(id.ToString());
-            }
 
             throw new ArgumentException("Cannot determine group path or id from provided Group instance.");
         }

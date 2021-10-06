@@ -10,15 +10,11 @@ namespace GitLabApiClient
     {
         private readonly GitLabHttpFacade _httpFacade;
 
-        internal FilesClient(GitLabHttpFacade httpFacade)
-        {
-            _httpFacade = httpFacade;
-        }
+        internal FilesClient(GitLabHttpFacade httpFacade) => _httpFacade = httpFacade;
 
         public async Task<File> GetAsync(ProjectId projectId, string filePath, string reference = "master")
         {
-            return await _httpFacade.Get<File>(
-                $"projects/{projectId}/repository/files/{filePath.UrlEncode()}?ref={reference}");
+            return await _httpFacade.Get<File>($"projects/{projectId}/repository/files/{filePath.UrlEncode()}?ref={reference}");
         }
     }
 }

@@ -12,56 +12,36 @@ namespace GitLabApiClient.Internal.Queries
         {
             string stateQueryValue = GetStateQueryValue(options.State);
             if (!stateQueryValue.IsNullOrEmpty())
-            {
                 query.Add("state", stateQueryValue);
-            }
 
             if (options.Order != MergeRequestsOrder.CreatedAt)
-            {
                 query.Add("order_by", GetIssuesOrderQueryValue(options.Order));
-            }
 
             if (options.SortOrder != SortOrder.Descending)
-            {
                 query.Add("sort", GetSortOrderQueryValue(options.SortOrder));
-            }
 
             if (!options.MilestoneTitle.IsNullOrEmpty())
-            {
                 query.Add("milestone", options.MilestoneTitle);
-            }
 
             if (options.Simple)
-            {
                 query.Add("view", "simple");
-            }
 
             if (options.Labels.Any())
-            {
                 query.Add("labels", options.Labels);
-            }
 
             if (options.CreatedAfter.HasValue)
-            {
                 query.Add("created_after", options.CreatedAfter.Value);
-            }
 
             if (options.CreatedBefore.HasValue)
-            {
                 query.Add("created_before", options.CreatedBefore.Value);
-            }
 
             query.Add("scope", GetScopeQueryValue(options.Scope));
 
             if (options.AuthorId.HasValue)
-            {
                 query.Add("author_id", options.AuthorId.Value);
-            }
 
             if (options.AssigneeId.HasValue)
-            {
                 query.Add("assignee_id", options.AssigneeId.Value);
-            }
         }
 
         private static string GetStateQueryValue(QueryMergeRequestState state)

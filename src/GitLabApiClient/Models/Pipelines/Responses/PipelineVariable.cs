@@ -7,8 +7,10 @@ namespace GitLabApiClient.Models.Pipelines.Responses
         [JsonProperty("variable_type")]
         public PipelineVariableType VariableType { get; set; } = PipelineVariableType.Unknown;
 
-        [JsonProperty("key")] public string Key { get; set; }
+        [JsonProperty("key")]
+        public string Key { get; set; }
 
-        [JsonProperty("value")] public string Value { get; set; }
+        [JsonProperty("value")]
+        public string Value { get; set; }
     }
 }

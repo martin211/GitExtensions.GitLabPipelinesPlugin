@@ -4,10 +4,6 @@ namespace GitLabApiClient.Models.Commits.Requests
 {
     public sealed class CommitQueryOptions
     {
-        internal CommitQueryOptions()
-        {
-        }
-
         public string RefName { get; set; }
 
         public DateTime? Since { get; set; }
@@ -21,5 +17,9 @@ namespace GitLabApiClient.Models.Commits.Requests
         public bool? WithStats { get; set; }
 
         public bool? FirstParent { get; set; }
+
+        internal CommitQueryOptions()
+        {
+        }
     }
 }

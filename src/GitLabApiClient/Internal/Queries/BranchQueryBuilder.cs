@@ -7,9 +7,7 @@ namespace GitLabApiClient.Internal.Queries
         protected override void BuildCore(Query query, BranchQueryOptions options)
         {
             if (!string.IsNullOrEmpty(options.Search))
-            {
                 query.Add("search", options.Search);
-            }
         }
     }
 }

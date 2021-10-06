@@ -11,44 +11,28 @@ namespace GitLabApiClient.Internal.Queries
             query.Add("skip_groups", options.SkipGroups);
 
             if (options.AllAvailable)
-            {
                 query.Add("all_available", options.AllAvailable);
-            }
 
             if (!options.Search.IsNullOrEmpty())
-            {
                 query.Add("search", options.Search);
-            }
 
             if (options.Order != GroupsOrder.Name)
-            {
                 query.Add("order_by", GetOrderQueryValue(options.Order));
-            }
 
             if (options.Sort != GroupsSort.Ascending)
-            {
                 query.Add("sort", GetSortQueryValue(options.Sort));
-            }
 
             if (options.Statistics)
-            {
                 query.Add("statistics", options.Statistics);
-            }
 
             if (options.WithCustomAttributes)
-            {
                 query.Add("with_custom_attributes", options.WithCustomAttributes);
-            }
 
             if (options.Owned)
-            {
                 query.Add("owned", options.Owned);
-            }
 
             if (options.MinAccessLevel.HasValue)
-            {
                 query.Add("min_access_level", (int)options.MinAccessLevel.Value);
-            }
         }
 
         private static string GetOrderQueryValue(GroupsOrder order)

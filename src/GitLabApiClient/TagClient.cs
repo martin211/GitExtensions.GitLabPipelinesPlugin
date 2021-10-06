@@ -24,20 +24,20 @@ namespace GitLabApiClient
         }
 
         /// <summary>
-        ///     Retrieves a tag by its name.
+        /// Retrieves a tag by its name
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="tagName">The tag, you want to retrieve.</param>
-        public async Task<Tag> GetAsync(ProjectId projectId, string tagName)
-        {
-            return await _httpFacade.Get<Tag>($"projects/{projectId}/repository/tags/{tagName}");
-        }
+        /// <returns></returns>
+        public async Task<Tag> GetAsync(ProjectId projectId, string tagName) =>
+            await _httpFacade.Get<Tag>($"projects/{projectId}/repository/tags/{tagName}");
 
         /// <summary>
-        /// Retrieves a tag by its name.
+        ///
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
-        /// <param name="options">Query options for tags <see cref="TagQueryOptions" />.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="options">Query options for tags <see cref="TagQueryOptions"/></param>
+        /// <returns></returns>
         public async Task<IList<Tag>> GetAsync(ProjectId projectId, Action<TagQueryOptions> options = null)
         {
             var queryOptions = new TagQueryOptions();
@@ -48,24 +48,20 @@ namespace GitLabApiClient
         }
 
         /// <summary>
-        ///     Create new tag.
+        /// Create new tag
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="request">Create Tag request.</param>
-        /// <returns>newly created Tag.</returns>
-        public async Task<Tag> CreateAsync(ProjectId projectId, CreateTagRequest request)
-        {
-            return await _httpFacade.Post<Tag>($"projects/{projectId}/repository/tags", request);
-        }
+        /// <returns>newly created Tag</returns>
+        public async Task<Tag> CreateAsync(ProjectId projectId, CreateTagRequest request) =>
+            await _httpFacade.Post<Tag>($"projects/{projectId}/repository/tags", request);
 
         /// <summary>
-        ///     Delete a tag.
+        /// Delete a tag
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="tagName">The tag name, you want to delete.</param>
-        public async Task DeleteAsync(ProjectId projectId, string tagName)
-        {
+        public async Task DeleteAsync(ProjectId projectId, string tagName) =>
             await _httpFacade.Delete($"projects/{projectId}/repository/tags/{tagName}");
-        }
     }
 }

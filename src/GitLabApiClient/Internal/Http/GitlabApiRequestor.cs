@@ -23,15 +23,15 @@ namespace GitLabApiClient.Internal.Http
 
         public async Task<T> Get<T>(string url)
         {
-            HttpResponseMessage responseMessage = await _client.GetAsync(url);
+            var responseMessage = await _client.GetAsync(url);
             await EnsureSuccessStatusCode(responseMessage);
             return await ReadResponse<T>(responseMessage);
         }
 
         public async Task GetFile(string url, string outputPath)
         {
-            HttpResponseMessage response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
-            Stream inputStream = await response.Content.ReadAsStreamAsync();
+            var response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
+            var inputStream = await response.Content.ReadAsStreamAsync();
             using (var outputStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write))
             {
                 await inputStream.CopyToAsync(outputStream);
@@ -41,7 +41,7 @@ namespace GitLabApiClient.Internal.Http
         public async Task<T> Post<T>(string url, object data = null)
         {
             StringContent content = SerializeToString(data);
-            HttpResponseMessage responseMessage = await _client.PostAsync(url, content);
+            var responseMessage = await _client.PostAsync(url, content);
             await EnsureSuccessStatusCode(responseMessage);
             return await ReadResponse<T>(responseMessage);
         }
@@ -49,7 +49,7 @@ namespace GitLabApiClient.Internal.Http
         public async Task Post(string url, object data = null)
         {
             StringContent content = SerializeToString(data);
-            HttpResponseMessage responseMessage = await _client.PostAsync(url, content);
+            var responseMessage = await _client.PostAsync(url, content);
             await EnsureSuccessStatusCode(responseMessage);
         }
 
@@ -58,8 +58,7 @@ namespace GitLabApiClient.Internal.Http
             return await PostFile<Upload>(url, null, uploadRequest);
         }
 
-        public async Task<T> PostFile<T>(string url, Dictionary<string, string> keyValues,
-            CreateUploadRequest uploadRequest)
+        public async Task<T> PostFile<T>(string url, Dictionary<string, string> keyValues, CreateUploadRequest uploadRequest)
         {
             using (var uploadContent =
                 new MultipartFormDataContent($"Upload----{DateTime.Now.Ticks}"))
@@ -68,13 +67,13 @@ namespace GitLabApiClient.Internal.Http
 
                 if (keyValues != null)
                 {
-                    foreach (KeyValuePair<string, string> kv in keyValues)
+                    foreach (var kv in keyValues)
                     {
                         uploadContent.Add(new StringContent(kv.Value), kv.Key);
                     }
                 }
 
-                HttpResponseMessage responseMessage = await _client.PostAsync(url, uploadContent);
+                var responseMessage = await _client.PostAsync(url, uploadContent);
                 await EnsureSuccessStatusCode(responseMessage);
 
                 return await ReadResponse<T>(responseMessage);
@@ -84,7 +83,7 @@ namespace GitLabApiClient.Internal.Http
         public async Task<T> Put<T>(string url, object data)
         {
             StringContent content = SerializeToString(data);
-            HttpResponseMessage responseMessage = await _client.PutAsync(url, content);
+            var responseMessage = await _client.PutAsync(url, content);
             await EnsureSuccessStatusCode(responseMessage);
             return await ReadResponse<T>(responseMessage);
         }
@@ -92,26 +91,29 @@ namespace GitLabApiClient.Internal.Http
         public async Task Put(string url, object data)
         {
             StringContent content = SerializeToString(data);
-            HttpResponseMessage responseMessage = await _client.PutAsync(url, content);
+            var responseMessage = await _client.PutAsync(url, content);
             await EnsureSuccessStatusCode(responseMessage);
         }
 
         public async Task Delete(string url)
         {
-            HttpResponseMessage responseMessage = await _client.DeleteAsync(url);
+            var responseMessage = await _client.DeleteAsync(url);
             await EnsureSuccessStatusCode(responseMessage);
         }
 
         public async Task Delete(string url, object data)
         {
-            var request = new HttpRequestMessage(HttpMethod.Delete, url) { Content = SerializeToString(data) };
-            HttpResponseMessage responseMessage = await _client.SendAsync(request);
+            var request = new HttpRequestMessage(HttpMethod.Delete, url)
+            {
+                Content = SerializeToString(data)
+            };
+            var responseMessage = await _client.SendAsync(request);
             await EnsureSuccessStatusCode(responseMessage);
         }
 
         public async Task<Tuple<T, HttpResponseHeaders>> GetWithHeaders<T>(string url)
         {
-            HttpResponseMessage responseMessage = await _client.GetAsync(url);
+            var responseMessage = await _client.GetAsync(url);
             await EnsureSuccessStatusCode(responseMessage);
             return Tuple.Create(await ReadResponse<T>(responseMessage), responseMessage.Headers);
         }
@@ -119,9 +121,7 @@ namespace GitLabApiClient.Internal.Http
         private static async Task EnsureSuccessStatusCode(HttpResponseMessage responseMessage)
         {
             if (responseMessage.IsSuccessStatusCode)
-            {
                 return;
-            }
 
             string errorResponse = await responseMessage.Content.ReadAsStringAsync();
             throw new GitLabException(responseMessage.StatusCode, errorResponse ?? "");
@@ -138,8 +138,9 @@ namespace GitLabApiClient.Internal.Http
         {
             string serializedObject = _jsonSerializer.Serialize(data);
 
-            StringContent content =
-                data != null ? new StringContent(serializedObject) : new StringContent(string.Empty);
+            var content = data != null ?
+                new StringContent(serializedObject) :
+                new StringContent(string.Empty);
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             return content;

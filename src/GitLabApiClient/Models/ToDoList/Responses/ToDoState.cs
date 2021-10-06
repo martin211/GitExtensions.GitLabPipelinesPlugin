@@ -4,8 +4,10 @@ namespace GitLabApiClient.Models.ToDoList.Responses
 {
     public enum ToDoState
     {
-        [EnumMember(Value = "pending")] Pending,
+        [EnumMember(Value = "pending")]
+        Pending,
 
-        [EnumMember(Value = "done")] Done
+        [EnumMember(Value = "done")]
+        Done,
     }
 }

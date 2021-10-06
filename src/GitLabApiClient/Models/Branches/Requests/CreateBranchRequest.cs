@@ -4,12 +4,13 @@ using Newtonsoft.Json;
 namespace GitLabApiClient.Models.Branches.Requests
 {
     /// <summary>
-    ///     Creates a new branch on a project.
+    /// Creates a new branch on a project.
     /// </summary>
     public sealed class CreateBranchRequest
     {
+
         /// <summary>
-        ///     Initializes a new instance of the <see cref="CreateBranchRequest" /> class
+        /// Initializes a new instance of the <see cref="CreateBranchRequest"/> class
         /// </summary>
         /// <param name="branch">Name of the Branch.</param>
         /// <param name="reference">Branch name or commit SHA to create branch from.</param>
@@ -22,15 +23,16 @@ namespace GitLabApiClient.Models.Branches.Requests
         }
 
         /// <summary>
-        ///     Branch Name.
+        /// Branch Name.
         /// </summary>
         [JsonProperty("branch")]
         public string Branch { get; set; }
 
         /// <summary>
-        ///     Branch Reference.
+        /// Branch Reference.
         /// </summary>
         [JsonProperty("ref")]
         public string Reference { get; set; }
+
     }
 }

@@ -7,10 +7,7 @@ namespace GitLabApiClient.Internal.Paths
     {
         private readonly string _id;
 
-        private UserId(string userId)
-        {
-            _id = userId;
-        }
+        private UserId(string userId) => _id = userId;
 
         public static implicit operator UserId(int userId)
         {
@@ -21,9 +18,7 @@ namespace GitLabApiClient.Internal.Paths
         {
             int id = user.Id;
             if (id > 0)
-            {
                 return new UserId(id.ToString());
-            }
 
             throw new ArgumentException("Cannot determine user id from provided User instance.");
         }

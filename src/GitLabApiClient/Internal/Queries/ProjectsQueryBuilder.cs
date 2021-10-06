@@ -10,84 +10,49 @@ namespace GitLabApiClient.Internal.Queries
         protected override void BuildCore(Query query, ProjectQueryOptions options)
         {
             if (!options.UserId.IsNullOrEmpty())
-            {
                 query.Add("user_id", options.UserId);
-            }
 
             if (options.Archived)
-            {
                 query.Add("archived", options.Archived);
-            }
 
             if (options.Visibility != QueryProjectVisibilityLevel.All)
-            {
                 query.Add("visibility", GetVisibilityQueryValue(options.Visibility));
-            }
 
             if (options.Order != ProjectsOrder.CreatedAt)
-            {
                 query.Add("order_by", GetProjectOrderQueryValue(options.Order));
-            }
 
             if (options.SortOrder != SortOrder.Descending)
-            {
                 query.Add("sort", GetSortOrderQueryValue(options.SortOrder));
-            }
 
             if (!options.Filter.IsNullOrEmpty())
-            {
                 query.Add("search", options.Filter);
-            }
 
             if (options.Simple)
-            {
                 query.Add("simple", options.Simple);
-            }
 
             if (options.Owned)
-            {
                 query.Add("owned", options.Owned);
-            }
 
             if (options.IsMemberOf)
-            {
                 query.Add("membership", options.IsMemberOf);
-            }
 
             if (options.Starred)
-            {
                 query.Add("starred", options.Starred);
-            }
 
             if (options.IncludeStatistics)
-            {
                 query.Add("statistics", options.IncludeStatistics);
-            }
 
             if (options.WithIssuesEnabled)
-            {
                 query.Add("with_issues_enabled", options.WithIssuesEnabled);
-            }
 
             if (options.WithMergeRequestsEnabled)
-            {
                 query.Add("with_merge_requests_enabled", options.WithMergeRequestsEnabled);
-            }
 
-            // Not Default year
-            if (options.LastActivityAfter.Year != 0001)
-            {
-                query.Add("last_activity_after",
-                    options.LastActivityAfter.ToUniversalTime().ToString("o")); // Format: ISO 8601 YYYY-MM-DDTHH:MM:SSZ
-            }
+            if (options.LastActivityAfter.Year != 0001) //Not Default year
+                query.Add("last_activity_after", options.LastActivityAfter.ToUniversalTime().ToString("o")); //Format: ISO 8601 YYYY-MM-DDTHH:MM:SSZ
 
-            // Not Default year
-            if (options.LastActivityBefore.Year != 0001)
-            {
-                query.Add("last_activity_before",
-                    options.LastActivityBefore.ToUniversalTime()
-                        .ToString("o")); // Format: ISO 8601 YYYY-MM-DDTHH:MM:SSZ
-            }
+            if (options.LastActivityBefore.Year != 0001) //Not Default year
+                query.Add("last_activity_before", options.LastActivityBefore.ToUniversalTime().ToString("o")); //Format: ISO 8601 YYYY-MM-DDTHH:MM:SSZ
         }
 
         private static string GetProjectOrderQueryValue(ProjectsOrder order)

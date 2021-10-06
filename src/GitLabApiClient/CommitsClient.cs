@@ -12,13 +12,12 @@ namespace GitLabApiClient
 {
     public sealed class CommitsClient : ICommitsClient
     {
+        private readonly GitLabHttpFacade _httpFacade;
         private readonly CommitQueryBuilder _commitQueryBuilder;
         private readonly CommitRefsQueryBuilder _commitRefsQueryBuilder;
         private readonly CommitStatusesQueryBuilder _commitStatusesQueryBuilder;
-        private readonly GitLabHttpFacade _httpFacade;
 
-        internal CommitsClient(GitLabHttpFacade httpFacade, CommitQueryBuilder commitQueryBuilder,
-            CommitRefsQueryBuilder commitRefsQueryBuilder, CommitStatusesQueryBuilder commitStatusesQueryBuilder)
+        internal CommitsClient(GitLabHttpFacade httpFacade, CommitQueryBuilder commitQueryBuilder, CommitRefsQueryBuilder commitRefsQueryBuilder, CommitStatusesQueryBuilder commitStatusesQueryBuilder)
         {
             _httpFacade = httpFacade;
             _commitQueryBuilder = commitQueryBuilder;
@@ -27,20 +26,20 @@ namespace GitLabApiClient
         }
 
         /// <summary>
-        ///     Get a commit from commit sha.
+        /// Get a commit from commit sha
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="sha">The commit hash or name of a repository branch or tag</param>
-        public async Task<Commit> GetAsync(ProjectId projectId, string sha)
-        {
-            return await _httpFacade.Get<Commit>($"projects/{projectId}/repository/commits/{sha}");
-        }
+        /// <returns></returns>
+        public async Task<Commit> GetAsync(ProjectId projectId, string sha) =>
+           await _httpFacade.Get<Commit>($"projects/{projectId}/repository/commits/{sha}");
 
         /// <summary>
-        ///     Retrieve a list of commits from a project.
+        /// Retrieve a list of commits from a project
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
-        /// <param name="options">Query Options <see cref="CommitQueryOptions" />.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="options">Query Options <see cref="CommitQueryOptions"/>.</param>
+        /// <returns></returns>
         public async Task<IList<Commit>> GetAsync(ProjectId projectId, Action<CommitQueryOptions> options = null)
         {
             var queryOptions = new CommitQueryOptions();
@@ -51,27 +50,27 @@ namespace GitLabApiClient
         }
 
         /// <summary>
-        ///     Retrieve a list of references (from branch or / and tag) that this commit belongs to.
+        /// Retrieve a list of references (from branch or / and tag) that this commit belongs to
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
-        /// <param name="options">Query Options <see cref="CommitRefsQueryOptions" />.</param>
-        /// <param name="sha">The commit hash or name of a repository branch or tag.</param>
-        public async Task<IList<CommitRef>> GetRefsAsync(ProjectId projectId, string sha,
-            Action<CommitRefsQueryOptions> options)
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="options">Query Options <see cref="CommitRefsQueryOptions"/>.</param>
+        /// <param name="sha">The commit hash or name of a repository branch or tag</param>
+        /// <returns></returns>
+        public async Task<IList<CommitRef>> GetRefsAsync(ProjectId projectId, string sha, Action<CommitRefsQueryOptions> options)
         {
             var queryOptions = new CommitRefsQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url =
-                _commitRefsQueryBuilder.Build($"projects/{projectId}/repository/commits/{sha}/refs", queryOptions);
+            string url = _commitRefsQueryBuilder.Build($"projects/{projectId}/repository/commits/{sha}/refs", queryOptions);
             return await _httpFacade.GetPagedList<CommitRef>(url);
         }
 
         /// <summary>
-        ///     Retrieve a list of differences in this commit.
+        /// Retrieve a list of differences in this commit
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
-        /// <param name="sha">The commit hash or name of a repository branch or tag.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="sha">The commit hash or name of a repository branch or tag</param>
+        /// <returns></returns>
         public async Task<IList<Diff>> GetDiffsAsync(ProjectId projectId, string sha)
         {
             string url = $"projects/{projectId}/repository/commits/{sha}/diff";
@@ -79,19 +78,18 @@ namespace GitLabApiClient
         }
 
         /// <summary>
-        ///     Retrieve a list of statuses in this commit.
+        /// Retrieve a list of statuses in this commit
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
-        /// <param name="options">Query Options <see cref="CommitStatusesQueryOptions" />.</param>
-        /// <param name="sha">The commit hash.</param>
-        public async Task<IList<CommitStatuses>> GetStatusesAsync(ProjectId projectId, string sha,
-            Action<CommitStatusesQueryOptions> options = null)
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="options">Query Options <see cref="CommitStatusesQueryOptions"/>.</param>
+        /// <param name="sha">The commit hash</param>
+        /// <returns></returns>
+        public async Task<IList<CommitStatuses>> GetStatusesAsync(ProjectId projectId, string sha, Action<CommitStatusesQueryOptions> options = null)
         {
             var queryOptions = new CommitStatusesQueryOptions();
             options?.Invoke(queryOptions);
 
-            string url = _commitStatusesQueryBuilder.Build($"projects/{projectId}/repository/commits/{sha}/statuses",
-                queryOptions);
+            string url = _commitStatusesQueryBuilder.Build($"projects/{projectId}/repository/commits/{sha}/statuses", queryOptions);
             return await _httpFacade.GetPagedList<CommitStatuses>(url);
         }
     }

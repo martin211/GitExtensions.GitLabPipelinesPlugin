@@ -25,20 +25,20 @@ namespace GitLabApiClient
         }
 
         /// <summary>
-        ///     Retrieves a release by its name.
+        /// Retrieves a release by its name
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="tagName">The release, you want to retrieve.</param>
-        public async Task<Release> GetAsync(ProjectId projectId, string tagName)
-        {
-            return await _httpFacade.Get<Release>($"projects/{projectId}/releases/{tagName}");
-        }
+        /// <returns></returns>
+        public async Task<Release> GetAsync(ProjectId projectId, string tagName) =>
+            await _httpFacade.Get<Release>($"projects/{projectId}/releases/{tagName}");
 
         /// <summary>
-        ///     Get a list of releases.
+        /// Get a list of releases
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
-        /// <param name="options">Query options <see cref="ReleaseQueryOptions" />.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
+        /// <param name="options">Query options <see cref="ReleaseQueryOptions"/>.</param>
+        /// <returns></returns>
         public async Task<IList<Release>> GetAsync(ProjectId projectId, Action<ReleaseQueryOptions> options = null)
         {
             var queryOptions = new ReleaseQueryOptions();
@@ -49,34 +49,31 @@ namespace GitLabApiClient
         }
 
         /// <summary>
-        ///     Create a release.
+        /// Create a release
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="request">Create release request.</param>
-        public async Task<Release> CreateAsync(ProjectId projectId, CreateReleaseRequest request)
-        {
-            return await _httpFacade.Post<Release>($"projects/{projectId}/releases", request);
-        }
+        /// <returns></returns>
+        public async Task<Release> CreateAsync(ProjectId projectId, CreateReleaseRequest request) =>
+            await _httpFacade.Post<Release>($"projects/{projectId}/releases", request);
 
         /// <summary>
-        ///     Update a release.
+        /// Update a release
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="tagName">The tag name of the release, you want to update.</param>
-        /// <param name="request">Update release request.</param>
-        public async Task<Release> UpdateAsync(ProjectId projectId, string tagName, UpdateReleaseRequest request)
-        {
-            return await _httpFacade.Put<Release>($"projects/{projectId}/releases/{tagName.UrlEncode()}", request);
-        }
+        /// <param name="request">Update release request</param>
+        /// <returns></returns>
+        public async Task<Release> UpdateAsync(ProjectId projectId, string tagName, UpdateReleaseRequest request) =>
+            await _httpFacade.Put<Release>($"projects/{projectId}/releases/{tagName.UrlEncode()}", request);
 
         /// <summary>
-        ///     Delete a release.
+        /// Delete a release
         /// </summary>
-        /// <param name="projectId">The ID, path or <see cref="Project" /> of the project.</param>
+        /// <param name="projectId">The ID, path or <see cref="Project"/> of the project.</param>
         /// <param name="tagName">The tag name of the release, you want to delete.</param>
-        public async Task DeleteAsync(ProjectId projectId, string tagName)
-        {
+        /// <returns></returns>
+        public async Task DeleteAsync(ProjectId projectId, string tagName) =>
             await _httpFacade.Delete($"projects/{projectId}/releases/{tagName.UrlEncode()}");
-        }
     }
 }

@@ -8,15 +8,13 @@ namespace GitLabApiClient.Internal.Paths
     {
         private readonly string _path;
 
-        private ProjectId(string projectPath)
-        {
-            _path = projectPath;
-        }
+        private ProjectId(string projectPath) => _path = projectPath;
 
         /// <summary>
-        ///     ProjectId will encode the project path for you.
+        /// ProjectId will encode the project path for you
         /// </summary>
-        /// <param name="projectPath">The project path ie. 'group/project'.</param>
+        /// <param name="projectPath">The project path ie. 'group/project'</param>
+        /// <returns></returns>
         public static implicit operator ProjectId(string projectPath)
         {
             return new ProjectId(projectPath.UrlEncode());
@@ -31,15 +29,11 @@ namespace GitLabApiClient.Internal.Paths
         {
             string projectPath = project.PathWithNamespace?.Trim();
             if (!string.IsNullOrEmpty(projectPath))
-            {
                 return new ProjectId(projectPath.UrlEncode());
-            }
 
             int id = project.Id;
             if (id > 0)
-            {
                 return new ProjectId(id.ToString());
-            }
 
             throw new ArgumentException("Cannot determine project path or id from provided Project instance.");
         }

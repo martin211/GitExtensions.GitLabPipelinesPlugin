@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace GitLabApiClient.Models.ToDoList.Responses
 {
+
     [JsonConverter(typeof(ToDoItemConverter))]
     public interface IToDo
     {
@@ -24,33 +25,44 @@ namespace GitLabApiClient.Models.ToDoList.Responses
 
     public abstract class ToDo : IToDo
     {
-        [JsonProperty("id")] public int? Id { get; set; }
+        [JsonProperty("id")]
+        public int? Id { get; set; }
 
-        [JsonProperty("project")] public Project Project { get; set; }
+        [JsonProperty("project")]
+        public Project Project { get; set; }
 
-        [JsonProperty("author")] public Assignee Author { get; set; }
+        [JsonProperty("author")]
+        public Assignee Author { get; set; }
 
-        [JsonProperty("action_name")] public ToDoActionType? ActionType { get; set; }
+        [JsonProperty("action_name")]
+        public ToDoActionType? ActionType { get; set; }
 
-        [JsonProperty("target_type")] public ToDoTargetType? TargetType { get; set; }
+        [JsonProperty("target_type")]
+        public ToDoTargetType? TargetType { get; set; }
 
-        [JsonProperty("target_url")] public string TargetUrl { get; set; }
+        [JsonProperty("target_url")]
+        public string TargetUrl { get; set; }
 
-        [JsonProperty("body")] public string Body { get; set; }
+        [JsonProperty("body")]
+        public string Body { get; set; }
 
-        [JsonProperty("state")] public ToDoState? State { get; set; }
+        [JsonProperty("state")]
+        public ToDoState? State { get; set; }
 
-        [JsonProperty("created_at")] public string CreatedAt { get; set; }
+        [JsonProperty("created_at")]
+        public string CreatedAt { get; set; }
     }
 
     public sealed class ToDoIssue : ToDo
     {
-        [JsonProperty("target")] public Issue Target { get; set; }
+        [JsonProperty("target")]
+        public Issue Target { get; set; }
     }
 
     public sealed class ToDoMergeRequest : ToDo
     {
-        [JsonProperty("target")] public MergeRequest Target { get; set; }
+        [JsonProperty("target")]
+        public MergeRequest Target { get; set; }
     }
 
     public class ToDoItemConverter : CustomCreationConverter<IToDo>
@@ -60,9 +72,9 @@ namespace GitLabApiClient.Models.ToDoList.Responses
             throw new NotImplementedException();
         }
 
-        public IToDo Create(JObject iobj)
+        public IToDo Create(JObject jObject)
         {
-            string type = (string)iobj.Property("target_type");
+            string type = (string)jObject.Property("target_type");
             switch (type)
             {
                 case "Issue":
@@ -70,16 +82,15 @@ namespace GitLabApiClient.Models.ToDoList.Responses
                 case "MergeRequest":
                     return new ToDoMergeRequest();
                 default:
-                    throw new ApplicationException("ToDo target not supported.");
+                    throw new ApplicationException($"ToDo target not supported.");
             }
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-            JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            JObject iobj = JObject.Load(reader);
-            IToDo target = Create(iobj);
-            serializer.Populate(iobj.CreateReader(), target);
+            var jObject = JObject.Load(reader);
+            var target = Create(jObject);
+            serializer.Populate(jObject.CreateReader(), target);
             return target;
         }
     }

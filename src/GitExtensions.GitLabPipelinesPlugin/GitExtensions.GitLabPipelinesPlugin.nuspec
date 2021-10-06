@@ -9,7 +9,6 @@
     <tags>GitExtensions,GitLab</tags>
     <dependencies>
       <dependency id="GitExtensions.Extensibility" version="(0.1.0, 1.0.0)" />
-      <dependency id="Newtonsoft.Json" version="10.0.3" />
     </dependencies>
   </metadata>
   <files>

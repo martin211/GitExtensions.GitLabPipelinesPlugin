@@ -7,9 +7,7 @@ namespace GitLabApiClient.Internal.Queries
         protected override void BuildCore(Query query, TagQueryOptions options)
         {
             if (!string.IsNullOrEmpty(options.Search))
-            {
                 query.Add("search", options.Search);
-            }
 
             query.Add("order_by", options.OrderBy.ToString().ToLower());
             query.Add("sort", options.Sort.ToString().ToLower());

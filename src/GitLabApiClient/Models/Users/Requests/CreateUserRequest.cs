@@ -4,18 +4,17 @@ using Newtonsoft.Json;
 namespace GitLabApiClient.Models.Users.Requests
 {
     /// <summary>
-    ///     Creates a new user.
-    ///     Note only administrators can create new users.
-    ///     Either <see cref="Password" /> or <see cref="ResetPassword" /> should be specified (<see cref="ResetPassword" />
-    ///     takes priority).
+    /// Creates a new user. 
+    /// Note only administrators can create new users. 
+    /// Either <see cref="Password"/> or <see cref="ResetPassword"/> should be specified (<see cref="ResetPassword"/> takes priority).
     /// </summary>
     public sealed class CreateUserRequest
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="CreateUserRequest" /> class.
-        ///     <param name="name">Name.</param>
-        ///     <param name="username">Username.</param>
-        ///     <param name="email">User email.</param>
+        /// Initializes a new instance of the <see cref="CreateUserRequest"/> class.
+        /// <param name="name">Name.</param>
+        /// <param name="username">Username.</param>
+        /// <param name="email">User email.</param>
         /// </summary>
         public CreateUserRequest(string name, string username, string email)
         {
@@ -28,121 +27,121 @@ namespace GitLabApiClient.Models.Users.Requests
         }
 
         /// <summary>
-        ///     User email.
+        /// User email.
         /// </summary>
         [JsonProperty("email")]
         public string Email { get; }
 
         /// <summary>
-        ///     Username.
+        /// Username.
         /// </summary>
         [JsonProperty("username")]
         public string Username { get; }
 
         /// <summary>
-        ///     Name.
+        /// Name.
         /// </summary>
         [JsonProperty("name")]
         public string Name { get; }
 
         /// <summary>
-        ///     Password.
+        /// Password.
         /// </summary>
         [JsonProperty("password")]
         public string Password { get; set; }
 
         /// <summary>
-        ///     Send user password reset link.
+        /// Send user password reset link.
         /// </summary>
         [JsonProperty("reset_password")]
         public bool? ResetPassword { get; set; } = true;
 
         /// <summary>
-        ///     Generate random password on the server.
+        /// Generate random password on the server.
         /// </summary>
         [JsonProperty("force_random_password")]
         public bool? ForceRandomPassword { get; set; } = true;
 
         /// <summary>
-        ///     Skype ID
+        /// Skype ID
         /// </summary>
         [JsonProperty("skype")]
         public string Skype { get; set; }
 
         /// <summary>
-        ///     LinkedIn account
+        /// LinkedIn account
         /// </summary>
         [JsonProperty("linkedin")]
         public string Linkedin { get; set; }
 
         /// <summary>
-        ///     Twitter account
+        /// Twitter account
         /// </summary>
         [JsonProperty("twitter")]
         public string Twitter { get; set; }
 
         /// <summary>
-        ///     Website URL
+        /// Website URL
         /// </summary>
         [JsonProperty("website_url")]
         public string WebSiteUrl { get; set; }
 
         /// <summary>
-        ///     Organization name
+        /// Organization name
         /// </summary>
         [JsonProperty("organization")]
         public string Organization { get; set; }
 
         /// <summary>
-        ///     umber of projects user can create
+        /// umber of projects user can create
         /// </summary>
         [JsonProperty("projects_limit")]
         public int? ProjectsLimit { get; set; }
 
         /// <summary>
-        ///     External UID
+        /// External UID
         /// </summary>
         [JsonProperty("extern_uid")]
         public string ExternUid { get; set; }
 
         /// <summary>
-        ///     External provider name
+        /// External provider name
         /// </summary>
         [JsonProperty("provider")]
         public string Provider { get; set; }
 
         /// <summary>
-        ///     User's biography
+        /// User's biography
         /// </summary>
         [JsonProperty("bio")]
         public string Bio { get; set; }
 
         /// <summary>
-        ///     User's location
+        /// User's location
         /// </summary>
         [JsonProperty("location")]
         public string Location { get; set; }
 
         /// <summary>
-        ///     User is admin
+        /// User is admin
         /// </summary>
         [JsonProperty("admin")]
         public bool? Admin { get; set; }
 
         /// <summary>
-        ///     User can create groups
+        /// User can create groups
         /// </summary>
         [JsonProperty("can_create_group")]
         public bool? CanCreateGroup { get; set; }
 
         /// <summary>
-        ///     Skip confirmation
+        /// Skip confirmation
         /// </summary>
         [JsonProperty("skip_confirmation")]
         public bool? SkipConfirmation { get; set; }
 
         /// <summary>
-        ///     Flags the user as external
+        /// Flags the user as external
         /// </summary>
         [JsonProperty("external")]
         public bool? External { get; set; }

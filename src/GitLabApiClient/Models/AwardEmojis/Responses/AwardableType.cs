@@ -5,6 +5,6 @@ namespace GitLabApiClient.Models.AwardEmojis.Responses
         Issue,
         MergeRequest,
         Note,
-        Snippet
+        Snippet,
     }
 }

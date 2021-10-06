@@ -4,8 +4,10 @@ namespace GitLabApiClient.Models.Milestones.Requests
 {
     public enum UpdatedMilestoneState
     {
-        [EnumMember(Value = "close")] Close,
+        [EnumMember(Value = "close")]
+        Close,
 
-        [EnumMember(Value = "activate")] Activate
+        [EnumMember(Value = "activate")]
+        Activate
     }
 }

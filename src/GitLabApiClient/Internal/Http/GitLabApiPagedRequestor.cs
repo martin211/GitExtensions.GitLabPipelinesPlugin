@@ -13,20 +13,16 @@ namespace GitLabApiClient.Internal.Http
 
         private readonly GitLabApiRequestor _requestor;
 
-        public GitLabApiPagedRequestor(GitLabApiRequestor requestor)
-        {
-            _requestor = requestor;
-        }
+        public GitLabApiPagedRequestor(GitLabApiRequestor requestor) => _requestor = requestor;
 
         public async Task<IList<T>> GetPagedList<T>(string url)
         {
             var result = new List<T>();
 
-            // make first request and it will get available pages in the headers
-            Tuple<IList<T>, HttpResponseHeaders> response =
-                await _requestor.GetWithHeaders<IList<T>>(GetPagedUrl(url, 1));
-            IList<T> results = response.Item1;
-            HttpResponseHeaders headers = response.Item2;
+            //make first request and it will get available pages in the headers
+            var response = await _requestor.GetWithHeaders<IList<T>>(GetPagedUrl(url, 1));
+            var results = response.Item1;
+            var headers = response.Item2;
             result.AddRange(results);
             int totalPages = headers.GetFirstHeaderValueOrDefault<int>("X-Total-Pages");
             int nextPage = headers.GetFirstHeaderValueOrDefault<int>("X-Next-Page");
@@ -49,9 +45,9 @@ namespace GitLabApiClient.Internal.Http
             do
             {
                 string pagedUrl = GetPagedUrl(url, nextPage);
-                Tuple<IList<T>, HttpResponseHeaders> response = await _requestor.GetWithHeaders<IList<T>>(pagedUrl);
-                IList<T> results = response.Item1;
-                HttpResponseHeaders headers = response.Item2;
+                var response = await _requestor.GetWithHeaders<IList<T>>(pagedUrl);
+                var results = response.Item1;
+                var headers = response.Item2;
                 result.AddRange(results);
                 nextPage = headers.GetFirstHeaderValueOrDefault<int>("X-Next-Page");
             }
@@ -62,21 +58,19 @@ namespace GitLabApiClient.Internal.Http
 
         private async Task<IList<T>> GetTotalPagedList<T>(string url, int totalPages, List<T> result)
         {
-            // get paged urls
-            List<string> pagedUrls = GetPagedUrls(url, totalPages);
+            //get paged urls
+            var pagedUrls = GetPagedUrls(url, totalPages);
             if (pagedUrls.Count == 0)
-            {
                 return result;
-            }
 
             int partitionSize = Environment.ProcessorCount;
-            List<string> remainingUrls = pagedUrls;
+            var remainingUrls = pagedUrls;
             do
             {
-                IEnumerable<Task<IList<T>>> responses = remainingUrls.Take(partitionSize).Select(
+                var responses = remainingUrls.Take(partitionSize).Select(
                     async u => await _requestor.Get<IList<T>>(u));
 
-                IList<T>[] results = await Task.WhenAll(responses);
+                var results = await Task.WhenAll(responses);
                 result.AddRange(results.SelectMany(r => r));
                 remainingUrls = remainingUrls.Skip(partitionSize).ToList();
             }
@@ -90,9 +84,7 @@ namespace GitLabApiClient.Internal.Http
             var pagedUrls = new List<string>();
 
             for (int i = 2; i <= totalPages; i++)
-            {
                 pagedUrls.Add(GetPagedUrl(originalUrl, i));
-            }
 
             return pagedUrls;
         }
@@ -112,10 +104,8 @@ namespace GitLabApiClient.Internal.Http
         {
             var toReturn = default(T);
 
-            if (!headers.TryGetValues(headerKey, out IEnumerable<string> headerValues))
-            {
+            if (!headers.TryGetValues(headerKey, out var headerValues))
                 return toReturn;
-            }
 
             string valueString = headerValues.FirstOrDefault();
             return valueString.IsNullOrEmpty() ? toReturn : (T)Convert.ChangeType(valueString, typeof(T));

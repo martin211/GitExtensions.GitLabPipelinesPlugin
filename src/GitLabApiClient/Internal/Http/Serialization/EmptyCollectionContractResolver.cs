@@ -10,10 +10,9 @@ namespace GitLabApiClient.Internal.Http.Serialization
     {
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
-            JsonProperty property = base.CreateProperty(member, memberSerialization);
+            var property = base.CreateProperty(member, memberSerialization);
             Predicate<object> shouldSerialize = property.ShouldSerialize;
-            property.ShouldSerialize = obj =>
-                (shouldSerialize == null || shouldSerialize(obj)) && !IsEmptyCollection(property, obj);
+            property.ShouldSerialize = obj => (shouldSerialize == null || shouldSerialize(obj)) && !IsEmptyCollection(property, obj);
             return property;
         }
 
@@ -21,9 +20,7 @@ namespace GitLabApiClient.Internal.Http.Serialization
         {
             object value = property.ValueProvider.GetValue(target);
             if (!(value is IEnumerable collection))
-            {
                 return false;
-            }
 
             return !collection.GetEnumerator().MoveNext();
         }

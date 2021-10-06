@@ -9,14 +9,10 @@ namespace GitLabApiClient.Internal.Queries
         protected override void BuildCore(Query query, IssueNotesQueryOptions options)
         {
             if (options.SortOrder != SortOrder.Descending)
-            {
                 query.Add("sort", GetSortOrderQueryValue(options.SortOrder));
-            }
 
             if (options.Order != NoteOrder.CreatedAt)
-            {
                 query.Add("order_by", GetNoteOrderQueryValue(options.Order));
-            }
         }
 
         private static string GetNoteOrderQueryValue(NoteOrder order)

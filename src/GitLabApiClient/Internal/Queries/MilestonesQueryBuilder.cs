@@ -9,20 +9,14 @@ namespace GitLabApiClient.Internal.Queries
         protected override void BuildCore(Query query, MilestonesQueryOptions options)
         {
             if (options.MilestoneIds.Count > 0)
-            {
                 query.Add(options.MilestoneIds);
-            }
 
             string stateQueryValue = GetStateQueryValue(options.State);
             if (!string.IsNullOrEmpty(stateQueryValue))
-            {
                 query.Add("state", stateQueryValue);
-            }
 
             if (!string.IsNullOrEmpty(options.Search))
-            {
                 query.Add("search", options.Search);
-            }
         }
 
         private static string GetStateQueryValue(MilestoneState state)

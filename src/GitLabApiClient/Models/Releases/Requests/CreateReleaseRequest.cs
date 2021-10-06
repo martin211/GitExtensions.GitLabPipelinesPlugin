@@ -6,12 +6,12 @@ using Newtonsoft.Json;
 namespace GitLabApiClient.Models.Releases.Requests
 {
     /// <summary>
-    ///     Used to create a release in a project.
+    /// Used to create a release in a project.
     /// </summary>
     public sealed class CreateReleaseRequest : Release
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="CreateReleaseRequest" /> class.
+        /// Initializes a new instance of the <see cref="CreateReleaseRequest"/> class.
         /// </summary>
         /// <param name="releaseName">The name of the release.</param>
         /// <param name="tagName">The name of the tag the release correspons to.</param>
@@ -25,9 +25,10 @@ namespace GitLabApiClient.Models.Releases.Requests
             ReleaseName = releaseName;
             TagName = tagName;
             Description = description;
-            ReleasedAt = releasedAt == null ? DateTime.Now : releasedAt;
+            ReleasedAt = (releasedAt == null) ? DateTime.Now : releasedAt;
         }
 
-        [JsonProperty("ref")] public string Ref { get; set; }
+        [JsonProperty("ref")]
+        public string Ref { get; set; }
     }
 }

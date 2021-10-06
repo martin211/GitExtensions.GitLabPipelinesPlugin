@@ -4,8 +4,10 @@ namespace GitLabApiClient.Models.Issues.Requests
 {
     public enum UpdatedIssueState
     {
-        [EnumMember(Value = "close")] Close,
+        [EnumMember(Value = "close")]
+        Close,
 
-        [EnumMember(Value = "reopen")] Reopen
+        [EnumMember(Value = "reopen")]
+        Reopen
     }
 }

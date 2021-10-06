@@ -4,13 +4,19 @@ namespace GitLabApiClient.Models.Issues.Responses
 {
     public sealed class ClosedBy : ModifiableObject
     {
-        [JsonProperty("avatar_url")] public string AvatarUrl;
+        [JsonProperty("active")]
+        public string State;
 
-        [JsonProperty("name")] public string Name;
-        [JsonProperty("active")] public string State;
+        [JsonProperty("web_url")]
+        public string WebUrl;
 
-        [JsonProperty("username")] public string Username;
+        [JsonProperty("avatar_url")]
+        public string AvatarUrl;
 
-        [JsonProperty("web_url")] public string WebUrl;
+        [JsonProperty("username")]
+        public string Username;
+
+        [JsonProperty("name")]
+        public string Name;
     }
 }
